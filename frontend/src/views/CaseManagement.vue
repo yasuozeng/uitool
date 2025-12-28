@@ -297,8 +297,8 @@ onMounted(() => {
 
 <style scoped lang="scss">
 .case-management {
-  padding: 20px;
-  background: #f5f5f5;
+  padding: 24px; // 从 20px 增加到 24px
+  background: #f0f2f5; // 更新为新的背景色
   min-height: 100vh;
 
   .page-header {
@@ -306,60 +306,81 @@ onMounted(() => {
     justify-content: space-between;
     align-items: center;
     margin-bottom: 20px;
+    padding: 18px 22px; // 增加内边距
+    background: white;
+    border-radius: 8px; // 从 4px 增加到 8px
+    box-shadow: 0 1px 6px rgba(0, 0, 0, 0.04); // 添加阴影
+    border: 1px solid #f0f0f0; // 添加边框
 
     h1 {
       margin: 0;
-      font-size: 24px;
-      font-weight: 500;
+      font-size: 22px; // 从 24px 调整为 22px
+      font-weight: 600; // 从 500 增加到 600
+      color: #262626; // 更新为新的文本色
     }
   }
 
   .filter-bar {
     display: flex;
-    gap: 12px;
-    margin-bottom: 16px;
-    padding: 16px;
+    gap: 16px; // 从 12px 增加到 16px
+    margin-bottom: 20px; // 从 16px 增加到 20px
+    padding: 18px 22px; // 增加内边距
     background: white;
-    border-radius: 4px;
+    border-radius: 8px; // 从 4px 增加到 8px
+    border: 1px solid #f0f0f0; // 添加边框
+    box-shadow: 0 1px 6px rgba(0, 0, 0, 0.04); // 添加阴影
+    transition: box-shadow 0.2s; // 添加过渡效果
+
+    &:hover {
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06); // 悬停时增强阴影
+    }
   }
 
   .batch-bar {
     display: flex;
     align-items: center;
-    gap: 12px;
-    margin-bottom: 16px;
-    padding: 12px 16px;
-    background: #e6f7ff;
-    border: 1px solid #91d5ff;
-    border-radius: 4px;
+    gap: 16px; // 从 12px 增加到 16px
+    margin-bottom: 20px; // 从 16px 增加到 20px
+    padding: 14px 18px; // 增加内边距
+    background: #e6f4ff; // 更新为新的浅蓝背景色
+    border: 1px solid #91caff; // 更新边框色
+    border-radius: 8px; // 从 4px 增加到 8px
+    box-shadow: 0 1px 6px rgba(22, 119, 255, 0.08); // 添加蓝色阴影
 
     .selection-info {
-      font-weight: 500;
-      color: #1890ff;
+      font-weight: 600; // 从 500 增加到 600
+      color: #1677ff; // 更新为新的主色
     }
   }
 
   .stats-bar {
     display: flex;
-    gap: 12px;
-    margin-bottom: 16px;
-    padding: 12px 16px;
+    gap: 16px; // 从 12px 增加到 16px
+    margin-bottom: 20px; // 从 16px 增加到 20px
+    padding: 14px 18px; // 增加内边距
     background: white;
-    border-radius: 4px;
+    border-radius: 8px; // 从 4px 增加到 8px
+    border: 1px solid #f0f0f0; // 添加边框
+    box-shadow: 0 1px 6px rgba(0, 0, 0, 0.04); // 添加阴影
   }
 
   .case-table {
     background: white;
-    border-radius: 4px;
+    border-radius: 8px; // 从 4px 增加到 8px
+    border: 1px solid #f0f0f0; // 添加边框
+    overflow: hidden; // 确保圆角生效
+    box-shadow: 0 1px 6px rgba(0, 0, 0, 0.04); // 添加阴影
   }
 
   .pagination {
     display: flex;
     justify-content: center;
-    margin-top: 20px;
-    padding: 16px;
+    margin-top: 24px; // 从 20px 增加到 24px
+    padding: 18px 22px; // 增加内边距
     background: white;
-    border-radius: 4px;
+    border-radius: 8px; // 从 4px 增加到 8px
+    border: 1px solid #f0f0f0; // 添加边框
+    box-shadow: 0 1px 6px rgba(0, 0, 0, 0.04); // 添加阴影
   }
 }
 </style>

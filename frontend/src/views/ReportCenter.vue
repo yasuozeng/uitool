@@ -335,88 +335,110 @@ onMounted(() => {
 
 <style scoped lang="scss">
 .report-center {
-  padding: 20px;
-  background: #f5f5f5;
+  padding: 24px; // 从 20px 增加到 24px
+  background: #f0f2f5; // 更新为新的背景色
   min-height: 100vh;
 
   .page-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 20px;
+    margin-bottom: 24px; // 从 20px 增加到 24px
+    padding: 18px 22px; // 增加内边距
+    background: white;
+    border-radius: 8px; // 从 4px 增加到 8px
+    box-shadow: 0 1px 6px rgba(0, 0, 0, 0.04); // 添加阴影
+    border: 1px solid #f0f0f0; // 添加边框
 
     h1 {
       margin: 0;
-      font-size: 24px;
-      font-weight: 500;
+      font-size: 22px; // 从 24px 调整为 22px
+      font-weight: 600; // 从 500 增加到 600
+      color: #262626; // 更新为新的文本色
     }
   }
 
   .filter-bar {
     display: flex;
-    gap: 12px;
-    margin-bottom: 20px;
-    padding: 16px;
+    gap: 16px; // 从 12px 增加到 16px
+    margin-bottom: 24px; // 保持不变
+    padding: 18px 22px; // 增加内边距
     background: white;
-    border-radius: 4px;
+    border-radius: 8px; // 从 4px 增加到 8px
+    border: 1px solid #f0f0f0; // 添加边框
+    box-shadow: 0 1px 6px rgba(0, 0, 0, 0.04); // 添加阴影
+    transition: box-shadow 0.2s; // 添加过渡效果
+
+    &:hover {
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06); // 悬停时增强阴影
+    }
   }
 
   .stats-cards {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: 16px;
-    margin-bottom: 20px;
+    gap: 20px; // 从 16px 增加到 20px
+    margin-bottom: 24px; // 从 20px 增加到 24px
 
     .stat-card {
       display: flex;
       align-items: center;
-      padding: 20px;
+      padding: 20px; // 保持不变
       background: white;
-      border-radius: 4px;
+      border-radius: 8px; // 从 4px 增加到 8px
+      border: 1px solid #f0f0f0; // 添加边框
+      box-shadow: 0 1px 6px rgba(0, 0, 0, 0.04); // 添加阴影
+      transition: all 0.2s; // 添加过渡效果
+
+      &:hover {
+        transform: translateY(-2px); // 轻微上移效果
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); // 悬停时增强阴影
+      }
 
       .stat-icon {
-        width: 60px;
-        height: 60px;
+        width: 56px; // 从 60px 调整为 56px
+        height: 56px; // 从 60px 调整为 56px
         display: flex;
         align-items: center;
         justify-content: center;
         border-radius: 8px;
-        font-size: 28px;
+        font-size: 24px; // 从 28px 调整为 24px
 
         &.total {
-          background: #e6f7ff;
-          color: #1890ff;
+          background: #e6f4ff; // 更新为新的浅蓝背景
+          color: #1677ff; // 更新为新的主色
         }
 
         &.success {
-          background: #f6ffed;
-          color: #52c41a;
+          background: #f6ffed; // 保持不变
+          color: #52c41a; // 保持不变
         }
 
         &.failed {
-          background: #fff1f0;
-          color: #f5222d;
+          background: #fff1f0; // 保持不变
+          color: #ff4d4f; // 更新为新的危险色
         }
 
         &.rate {
-          background: #fff7e6;
-          color: #fa8c16;
+          background: #fff7e6; // 保持不变
+          color: #faad14; // 保持不变
         }
       }
 
       .stat-content {
-        margin-left: 16px;
+        margin-left: 16px; // 保持不变
 
         .stat-label {
-          font-size: 14px;
-          color: #666;
-          margin-bottom: 4px;
+          font-size: 14px; // 保持不变
+          color: #595959; // 更新为新的文本色
+          margin-bottom: 6px; // 从 4px 增加到 6px
+          font-weight: 500; // 添加字重
         }
 
         .stat-value {
-          font-size: 24px;
-          font-weight: 500;
-          color: #333;
+          font-size: 28px; // 从 24px 增加到 28px
+          font-weight: 600; // 从 500 增加到 600
+          color: #262626; // 更新为新的文本色
         }
       }
     }
@@ -424,22 +446,57 @@ onMounted(() => {
 
   .execution-table {
     background: white;
-    border-radius: 4px;
-    padding: 16px;
+    border-radius: 8px; // 从 4px 增加到 8px
+    padding: 20px; // 从 16px 增加到 20px
+    border: 1px solid #f0f0f0; // 添加边框
+    box-shadow: 0 1px 6px rgba(0, 0, 0, 0.04); // 添加阴影
 
     .result-summary {
-      font-size: 13px;
-      color: #666;
+      font-size: 14px; // 从 13px 增加到 14px
+      color: #595959; // 更新为新的文本色
+      font-weight: 500; // 添加字重
     }
   }
 
   .pagination {
     display: flex;
     justify-content: center;
-    margin-top: 20px;
-    padding: 16px;
+    margin-top: 24px; // 从 20px 增加到 24px
+    padding: 18px 22px; // 增加内边距
     background: white;
-    border-radius: 4px;
+    border-radius: 8px; // 从 4px 增加到 8px
+    border: 1px solid #f0f0f0; // 添加边框
+    box-shadow: 0 1px 6px rgba(0, 0, 0, 0.04); // 添加阴影
+  }
+}
+
+// 响应式调整
+@media (max-width: 1400px) {
+  .report-center {
+    .stats-cards {
+      grid-template-columns: repeat(2, 1fr); // 从 4 列调整为 2 列
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .report-center {
+    padding: 16px; // 减小内边距
+
+    .stats-cards {
+      grid-template-columns: 1fr; // 调整为 1 列
+      gap: 12px; // 减小间距
+    }
+
+    .filter-bar {
+      flex-direction: column; // 垂直排列
+      gap: 12px; // 减小间距
+
+      .el-select,
+      .el-date-picker {
+        width: 100% !important; // 全宽
+      }
+    }
   }
 }
 </style>

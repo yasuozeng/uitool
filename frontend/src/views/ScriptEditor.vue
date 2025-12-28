@@ -333,31 +333,33 @@ onMounted(() => {
   display: flex;
   flex-direction: column;
   height: 100vh;
-  background: #f5f5f5;
+  background: #f0f2f5; // 更新为新的背景色
 
   .page-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 16px 24px;
+    padding: 16px 24px; // 保持不变
     background: white;
-    border-bottom: 1px solid #e8e8e8;
+    border-bottom: 1px solid #f0f0f0; // 更新边框色
+    box-shadow: 0 1px 6px rgba(0, 0, 0, 0.04); // 添加阴影
 
     .header-left {
       display: flex;
       align-items: center;
-      gap: 16px;
+      gap: 16px; // 保持不变
 
       h1 {
         margin: 0;
         font-size: 20px;
-        font-weight: 500;
+        font-weight: 600; // 从 500 增加到 600
+        color: #262626; // 添加文本色
       }
     }
 
     .header-right {
       display: flex;
-      gap: 12px;
+      gap: 12px; // 保持不变
     }
   }
 
@@ -365,44 +367,87 @@ onMounted(() => {
     flex: 1;
     display: flex;
     overflow: hidden;
-    padding: 16px;
-    gap: 16px;
+    padding: 20px; // 从 16px 增加到 20px
+    gap: 20px; // 从 16px 增加到 20px
 
     .left-panel {
-      width: 350px;
+      width: 360px; // 从 350px 增加到 360px
       display: flex;
       flex-direction: column;
       background: white;
-      border-radius: 4px;
+      border-radius: 8px; // 从 4px 增加到 8px
       overflow: hidden;
+      border: 1px solid #f0f0f0; // 添加边框
+      box-shadow: 0 1px 6px rgba(0, 0, 0, 0.04); // 添加阴影
 
       .panel-header {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        padding: 12px 16px;
-        border-bottom: 1px solid #e8e8e8;
-        font-weight: 500;
+        padding: 14px 18px; // 增加内边距
+        border-bottom: 1px solid #f0f0f0; // 更新边框色
+        font-weight: 600; // 从 500 增加到 600
+        color: #262626; // 添加文本色
+        background: #fafafa; // 添加背景色
       }
     }
 
     .right-panel {
       flex: 1;
       background: white;
-      border-radius: 4px;
+      border-radius: 8px; // 从 4px 增加到 8px
       overflow: hidden;
+      border: 1px solid #f0f0f0; // 添加边框
+      box-shadow: 0 1px 6px rgba(0, 0, 0, 0.04); // 添加阴影
 
       .editor-tabs {
         height: 100%;
 
+        :deep(.el-tabs__header) {
+          margin: 0;
+          padding: 0 20px; // 添加水平内边距
+          background: #fafafa; // 添加背景色
+          border-bottom: 1px solid #f0f0f0; // 更新边框色
+
+          .el-tabs__nav-wrap {
+            &::after {
+              display: none; // 移除默认底部边框
+            }
+          }
+
+          .el-tabs__item {
+            font-weight: 500; // 添加字重
+            font-size: 15px; // 增加字体大小
+            color: #595959; // 更新文本色
+            height: 56px; // 增加高度
+            line-height: 56px; // 调整行高
+            transition: all 0.2s; // 添加过渡效果
+
+            &:hover {
+              color: #1677ff; // 悬停时使用主色
+            }
+
+            &.is-active {
+              color: #1677ff; // 更新为新的主色
+              font-weight: 600; // 激活状态加粗
+            }
+          }
+
+          .el-tabs__active-bar {
+            background: #1677ff; // 更新为新的主色
+            height: 3px; // 增加高度
+            border-radius: 3px 3px 0 0; // 添加圆角
+          }
+        }
+
         :deep(.el-tabs__content) {
-          height: calc(100% - 55px);
+          height: calc(100% - 56px); // 调整高度计算
           overflow-y: auto;
         }
 
         .basic-form {
-          max-width: 600px;
-          padding: 20px;
+          max-width: 640px; // 从 600px 增加到 640px
+          padding: 32px; // 从 20px 增加到 32px
         }
 
         .step-edit-area {
@@ -413,31 +458,34 @@ onMounted(() => {
           display: flex;
           align-items: center;
           justify-content: center;
-          height: 300px;
+          height: 320px; // 从 300px 增加到 320px
         }
 
         .step-title-bar {
           display: flex;
           align-items: center;
-          gap: 12px;
-          padding: 16px 20px;
-          border-bottom: 1px solid #e8e8e8;
-          background: #fafafa;
+          gap: 12px; // 保持不变
+          padding: 16px 24px; // 增加内边距
+          border-bottom: 1px solid #f0f0f0; // 更新边框色
+          background: #fafafa; // 保持不变
 
           .step-title {
-            font-weight: 500;
+            font-weight: 600; // 从 500 增加到 600
             font-size: 16px;
+            color: #262626; // 添加文本色
           }
         }
 
         .json-preview {
           margin: 0;
-          padding: 20px;
-          background: #f5f5f5;
-          font-family: 'Consolas', 'Monaco', monospace;
+          padding: 24px; // 从 20px 增加到 24px
+          background: #fafafa; // 从 #f5f5f5 更新为 #fafafa
+          font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
           font-size: 13px;
           line-height: 1.6;
           overflow: auto;
+          color: #262626; // 添加文本色
+          border-radius: 6px; // 添加圆角
         }
       }
     }

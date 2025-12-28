@@ -425,84 +425,116 @@ onUnmounted(() => {
 
 <style scoped lang="scss">
 .execution-console {
-  padding: 20px;
-  background: #f5f5f5;
+  padding: 24px; // 从 20px 增加到 24px
+  background: #f0f2f5; // 更新为新的背景色
   min-height: 100vh;
 
   .page-header {
-    margin-bottom: 20px;
+    margin-bottom: 24px; // 从 20px 增加到 24px
+    padding: 18px 22px; // 增加内边距
+    background: white;
+    border-radius: 8px; // 添加圆角
+    box-shadow: 0 1px 6px rgba(0, 0, 0, 0.04); // 添加阴影
+    border: 1px solid #f0f0f0; // 添加边框
 
     h1 {
       margin: 0;
-      font-size: 24px;
-      font-weight: 500;
+      font-size: 22px; // 从 24px 调整为 22px
+      font-weight: 600; // 从 500 增加到 600
+      color: #262626; // 更新为新的文本色
     }
   }
 
   .console-content {
     display: flex;
-    gap: 20px;
-    height: calc(100vh - 120px);
+    gap: 24px; // 从 20px 增加到 24px
+    height: calc(100vh - 136px); // 调整高度计算
 
     .config-panel {
-      width: 350px;
+      width: 360px; // 从 350px 增加到 360px
       display: flex;
       flex-direction: column;
-      gap: 16px;
+      gap: 20px; // 从 16px 增加到 20px
 
       .panel-section {
         background: white;
-        padding: 16px;
-        border-radius: 4px;
+        padding: 20px; // 从 16px 增加到 20px
+        border-radius: 8px; // 从 4px 增加到 8px
+        border: 1px solid #f0f0f0; // 添加边框
+        box-shadow: 0 1px 6px rgba(0, 0, 0, 0.04); // 添加阴影
 
         h3 {
-          margin: 0 0 16px;
+          margin: 0 0 20px; // 从 16px 增加到 20px
           font-size: 16px;
-          font-weight: 500;
+          font-weight: 600; // 从 500 增加到 600
+          color: #262626; // 添加文本色
+          padding-left: 12px; // 为左侧装饰线留出空间
+          position: relative; // 为伪元素定位
+
+          // 左侧装饰线
+          &::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 3px;
+            height: 16px;
+            background: #1677ff; // 使用新的主色
+            border-radius: 2px;
+          }
         }
 
         &.action-section {
           display: flex;
           flex-direction: column;
-          gap: 12px;
+          gap: 16px; // 从 12px 增加到 16px
 
           .el-button {
             width: 100%;
+            height: 44px; // 增加按钮高度
+            font-size: 15px; // 增加字体大小
+            font-weight: 600;
+            border-radius: 6px;
           }
         }
       }
 
       .hint {
         margin-left: 12px;
-        font-size: 12px;
-        color: #999;
+        font-size: 13px; // 从 12px 增加到 13px
+        color: #8c8c8c; // 更新为新的文本色
       }
 
       .search-input {
-        margin-bottom: 12px;
+        margin-bottom: 16px; // 从 12px 增加到 16px
       }
 
       .case-list {
-        max-height: 300px;
+        max-height: 320px; // 从 300px 增加到 320px
         overflow-y: auto;
-        border: 1px solid #e8e8e8;
-        border-radius: 4px;
+        border: 1px solid #f0f0f0; // 更新边框色
+        border-radius: 6px; // 从 4px 增加到 6px
+        background: #fafafa; // 添加背景色
 
         .case-item {
           display: flex;
           justify-content: space-between;
           align-items: center;
-          padding: 10px 12px;
-          border-bottom: 1px solid #e8e8e8;
+          padding: 12px 14px; // 增加内边距
+          border-bottom: 1px solid #f0f0f0; // 更新边框色
           cursor: pointer;
-          transition: background 0.2s;
+          transition: all 0.2s;
+          background: white;
 
           &:hover {
             background: #f5f5f5;
           }
 
           &.selected {
-            background: #e6f7ff;
+            background: #e6f4ff; // 更新为新的浅蓝背景
+            border-left: 3px solid #1677ff; // 添加左侧选中指示器
+            padding-left: 11px; // 补偿边框宽度
           }
 
           .case-info {
@@ -511,35 +543,41 @@ onUnmounted(() => {
 
             .case-name {
               font-size: 14px;
-              margin-bottom: 4px;
+              font-weight: 500; // 添加字重
+              margin-bottom: 6px; // 从 4px 增加到 6px
               overflow: hidden;
               text-overflow: ellipsis;
               white-space: nowrap;
+              color: #262626; // 添加文本色
             }
 
             .case-meta {
               display: flex;
               align-items: center;
-              gap: 8px;
+              gap: 10px; // 从 8px 增加到 10px
               font-size: 12px;
 
               .step-count {
-                color: #999;
+                color: #8c8c8c; // 更新为新的文本色
               }
             }
           }
         }
 
         .empty-cases {
-          padding: 20px;
+          padding: 32px; // 从 20px 增加到 32px
         }
       }
 
       .selection-summary {
-        margin-top: 12px;
+        margin-top: 16px; // 从 12px 增加到 16px
+        padding: 10px; // 添加内边距
         text-align: center;
         font-size: 14px;
-        color: #1890ff;
+        font-weight: 500; // 添加字重
+        color: #1677ff; // 更新为新的主色
+        background: #e6f4ff; // 添加背景色
+        border-radius: 6px; // 添加圆角
       }
     }
 
@@ -547,16 +585,18 @@ onUnmounted(() => {
       flex: 1;
       display: flex;
       flex-direction: column;
-      gap: 16px;
+      gap: 20px; // 从 16px 增加到 20px
       min-width: 0;
 
       .progress-section {
         background: white;
-        padding: 20px;
-        border-radius: 4px;
+        padding: 24px; // 从 20px 增加到 24px
+        border-radius: 8px; // 从 4px 增加到 8px
+        border: 1px solid #f0f0f0; // 添加边框
+        box-shadow: 0 1px 6px rgba(0, 0, 0, 0.04); // 添加阴影
 
         .progress-info {
-          margin-bottom: 16px;
+          margin-bottom: 20px; // 从 16px 增加到 20px
 
           .progress-stats {
             display: flex;
@@ -565,12 +605,13 @@ onUnmounted(() => {
             :deep(.el-statistic) {
               .el-statistic__head {
                 font-size: 13px;
-                color: #666;
+                color: #595959; // 更新为新的文本色
+                font-weight: 500; // 添加字重
               }
 
               .el-statistic__content {
-                font-size: 24px;
-                font-weight: 500;
+                font-size: 28px; // 从 24px 增加到 28px
+                font-weight: 600; // 从 500 增加到 600
               }
             }
           }
@@ -580,16 +621,34 @@ onUnmounted(() => {
       .results-section {
         flex: 1;
         background: white;
-        border-radius: 4px;
-        padding: 16px;
+        border-radius: 8px; // 从 4px 增加到 8px
+        padding: 20px; // 保持不变
         display: flex;
         flex-direction: column;
         overflow: hidden;
+        border: 1px solid #f0f0f0; // 添加边框
+        box-shadow: 0 1px 6px rgba(0, 0, 0, 0.04); // 添加阴影
 
         h3 {
-          margin: 0 0 16px;
+          margin: 0 0 20px; // 从 16px 增加到 20px
           font-size: 16px;
-          font-weight: 500;
+          font-weight: 600; // 从 500 增加到 600
+          color: #262626; // 添加文本色
+          padding-left: 12px; // 为左侧装饰线留出空间
+          position: relative; // 为伪元素定位
+
+          // 左侧装饰线
+          &::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 3px;
+            height: 16px;
+            background: #52c41a; // 使用成功色
+            border-radius: 2px;
+          }
         }
 
         .results-list {
@@ -597,50 +656,59 @@ onUnmounted(() => {
           overflow-y: auto;
 
           .result-item {
-            padding: 12px;
-            margin-bottom: 12px;
-            border: 1px solid #e8e8e8;
-            border-radius: 4px;
+            padding: 14px; // 从 12px 增加到 14px
+            margin-bottom: 16px; // 从 12px 增加到 16px
+            border: 1px solid #f0f0f0; // 更新边框色
+            border-radius: 8px; // 从 4px 增加到 8px
             background: #fafafa;
+            transition: all 0.2s; // 添加过渡效果
+
+            &:hover {
+              box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06); // 悬停时添加阴影
+            }
 
             &.result-completed {
-              border-left: 4px solid #67c23a;
+              border-left: 3px solid #52c41a; // 更新为成功色
             }
 
             &.result-failed {
-              border-left: 4px solid #f56c6c;
+              border-left: 3px solid #ff4d4f; // 更新为危险色
             }
 
             .result-header {
               display: flex;
               align-items: center;
-              gap: 8px;
+              gap: 10px; // 从 8px 增加到 10px
 
               .success-icon {
-                color: #67c23a;
+                color: #52c41a; // 更新为成功色
+                font-size: 18px; // 增加图标大小
               }
 
               .error-icon {
-                color: #f56c6c;
+                color: #ff4d4f; // 更新为危险色
+                font-size: 18px; // 增加图标大小
               }
 
               .case-name {
                 flex: 1;
-                font-weight: 500;
+                font-weight: 600; // 从 500 增加到 600
+                font-size: 15px; // 增加字体大小
               }
             }
 
             .error-message {
-              margin-top: 8px;
-              padding: 8px;
-              background: #fef0f0;
-              border-radius: 4px;
-              color: #f56c6c;
+              margin-top: 12px; // 从 8px 增加到 12px
+              padding: 10px; // 从 8px 增加到 10px
+              background: #fff1f0; // 更新为新的错误背景色
+              border-radius: 6px; // 从 4px 增加到 6px
+              color: #ff4d4f; // 更新为新的危险色
               font-size: 13px;
+              border-left: 3px solid #ff4d4f; // 添加左侧边框指示器
             }
 
             .screenshot-action {
-              margin-top: 8px;
+              margin-top: 12px; // 从 8px 增加到 12px
             }
           }
 
@@ -648,7 +716,7 @@ onUnmounted(() => {
             display: flex;
             align-items: center;
             justify-content: center;
-            height: 200px;
+            height: 240px; // 从 200px 增加到 240px
           }
         }
       }
