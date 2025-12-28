@@ -12,8 +12,9 @@
     <div class="console-content">
       <!-- 左侧：配置面板 -->
       <div class="config-panel">
+        <!-- 引擎配置面板 -->
         <div class="panel-section">
-          <h3>浏览器配置</h3>
+          <h3>引擎配置</h3>
           <el-form label-width="90px" label-position="left">
             <el-form-item label="执行引擎">
               <el-select v-model="config.engine" style="width: 100%">
@@ -25,7 +26,13 @@
                 />
               </el-select>
             </el-form-item>
+          </el-form>
+        </div>
 
+        <!-- 浏览器配置面板 -->
+        <div class="panel-section">
+          <h3>浏览器配置</h3>
+          <el-form label-width="90px" label-position="left">
             <el-form-item label="浏览器">
               <el-select v-model="config.browser" style="width: 100%">
                 <el-option
