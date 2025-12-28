@@ -1,0 +1,19 @@
+{
+  "name": "页面导航测试",
+  "priority": "P1",
+  "description": "测试navigate操作类型",
+  "tags": "smoke",
+  "steps": [
+    {
+      "step_order": 1,
+      "action_type": "navigate",
+      "element_locator": null,
+      "locator_type": "css",
+      "action_params": {
+        "url": "https://example.com"
+      },
+      "expected_result": "页面加载成功",
+      "description": "打开首页"
+    }
+  ]
+}

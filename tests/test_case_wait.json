@@ -1,0 +1,19 @@
+{
+  "name": "等待元素测试",
+  "priority": "P1",
+  "description": "测试wait操作类型",
+  "tags": "regression",
+  "steps": [
+    {
+      "step_order": 1,
+      "action_type": "wait",
+      "element_locator": ".loading-spinner",
+      "locator_type": "css",
+      "action_params": {
+        "timeout": 5000
+      },
+      "expected_result": "加载动画出现",
+      "description": "等待加载完成"
+    }
+  ]
+}

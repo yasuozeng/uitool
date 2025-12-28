@@ -1,0 +1,19 @@
+{
+  "name": "输入文本测试",
+  "priority": "P1",
+  "description": "测试input操作类型",
+  "tags": "regression",
+  "steps": [
+    {
+      "step_order": 1,
+      "action_type": "input",
+      "element_locator": "#username",
+      "locator_type": "css",
+      "action_params": {
+        "text": "testuser"
+      },
+      "expected_result": "输入框显示testuser",
+      "description": "输入用户名"
+    }
+  ]
+}

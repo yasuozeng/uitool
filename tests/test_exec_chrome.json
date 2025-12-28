@@ -1,0 +1,7 @@
+{
+  "execution_type": "single",
+  "case_ids": [28],
+  "browser": "chrome",
+  "headless": true,
+  "window_size": "1920x1080"
+}

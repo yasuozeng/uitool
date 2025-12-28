@@ -1,0 +1,252 @@
+切换plan模式理清需求
+
+人工检查
+
+敲定
+
+开发任务计划
+
+先编码最核心
+
+调试
+
+执行单元测试的操作步骤是什么 
+
+● 单元测试执行步骤
+
+  方式一：运行所有测试
+
+  cd F:\知识\uiTool1.0\backend
+  py -3 -m pytest tests/ -v
+
+  方式二：运行带覆盖率的测试
+
+  cd F:\知识\uiTool1.0\backend
+  py -3 -m pytest tests/ --cov=app --cov-report=html --cov-report=term-missing
+
+  方式三：运行特定模块测试
+
+  # 只测试配置模块
+  py -3 -m pytest tests/unit/test_config/ -v
+
+  # 只测试数据模型
+  py -3 -m pytest tests/unit/test_models/ -v
+
+  # 只测试执行引擎
+  py -3 -m pytest tests/unit/test_engines/ -v
+
+  方式四：运行单个测试文件
+
+  # 测试配置模块
+  py -3 -m pytest tests/unit/test_config/test_config.py -v
+
+  # 测试用例模型
+  py -3 -m pytest tests/unit/test_models/test_case.py -v
+
+  # 测试执行引擎
+  py -3 -m pytest tests/unit/test_engines/test_playwright_init.py -v
+
+  方式五：运行单个测试用例
+
+  # 运行特定测试类
+  py -3 -m pytest tests/unit/test_config/test_config.py::TestConfigConstants -v
+
+  # 运行特定测试方法
+  py -3 -m pytest tests/unit/test_config/test_config.py::TestConfigConstants::test_base_dir_exists -v
+
+  查看覆盖率报告
+
+  运行带覆盖率的测试后，可以查看详细报告：
+
+  # 生成 HTML 报告
+  py -3 -m pytest tests/ --cov=app --cov-report=html
+
+  # 在浏览器中打开报告
+  start htmlcov/index.html
+
+  常用参数说明
+
+  | 参数                      | 说明                       |
+  |---------------------------|----------------------------|
+  | -v                        | 详细输出，显示每个测试用例 |
+  | --tb=short                | 简短的错误回溯信息         |
+  | --cov=app                 | 测试 app 包的覆盖率        |
+  | --cov-report=html         | 生成 HTML 格式覆盖率报告   |
+  | --cov-report=term-missing | 在终端显示未覆盖的行号     |
+  | -k "关键词"               | 只运行名称包含关键词的测试 |
+  | -x                        | 遇到第一个失败就停止       |
+  | --lf                      | 只运行上次失败的测试       |
+
+  快速验证命令
+
+  # 快速验证（无覆盖率）
+  py -3 -m pytest tests/ -q
+
+  # 完整验证（带覆盖率）
+  py -3 -m pytest tests/ --cov=app --cov-report=term
+
+   运行测试
+
+  # 进入 backend 目录
+  cd backend
+
+  # 运行所有测试
+  pytest
+
+  # 运行特定模块测试
+  pytest tests/unit/test_schemas/
+  pytest tests/unit/test_services/
+  pytest tests/unit/test_api/
+
+  # 运行特定文件
+  pytest tests/unit/test_schemas/test_common.py -v
+
+  # 查看覆盖率
+  pytest --cov=app --cov-report=html
+
+    运行命令：
+  cd F:\知识\uiTool1.0\frontend
+  npm run test:coverage -- src/store/modules/*.test.ts src/api/*.test.ts
+
+
+● 终端 1 - 后端：
+  cd F:\知识\uiTool1.0\backend
+  py -m uvicorn app.main:app --host 127.0.0.1 --port 8000 --reload
+
+  终端 2 - 前端：
+  cd F:\知识\uiTool1.0\frontend
+  npm run dev -- --port 5174
+
+    关闭前端服务
+
+  在运行前端的 PowerShell 窗口中按：
+  Ctrl + C
+
+  关闭后端服务
+
+  在运行后端的窗口中按：
+  Ctrl + C
+
+  外网访问
+  http://192.168.100.199:5175/
+
+  解决方案
+
+  方式 1：手动操作（推荐）
+
+  # 1. 先关闭所有 PowerShell 窗口和后端服务
+
+  # 2. 打开新的 PowerShell，进入后端目录
+  cd F:\知识\uiTool1.0\backend
+
+  # 3. 删除旧虚拟环境
+  rmdir /s /q venv
+
+  # 4. 使用 Python 3.11 创建新虚拟环境
+  py -3.11 -m venv venv
+
+  # 5. 激活虚拟环境
+  .\venv\Scripts\Activate.ps1
+
+  # 6. 安装依赖
+  pip install -r requirements.txt
+
+  # 7. 安装 Playwright 浏览器
+  playwright install chromium
+
+  # 8. 启动后端
+  py -3.11 -m uvicorn app.main:app --host 127.0.0.1 --port 8000 --reload
+
+  方式 2：使用不同的虚拟环境名称
+
+  # 直接创建新的虚拟环境（不删除旧的）
+  py -3.11 -m venv venv311
+
+  # 激活新的虚拟环境
+  .\venv311\Scripts\Activate.ps1
+
+  # 安装依赖
+  pip install -r requirements.txt
+  playwright install chromium
+
+
+  API 接口测试执行指令
+
+  运行所有 API 测试
+
+  cd F:\知识\uiTool1.0\backend
+
+  # 激活虚拟环境（如果使用）
+  .\venv\Scripts\Activate.ps1
+pytest更换为py
+  # 运行所有 API 接口测试
+  pytest tests/unit/test_api/ -v
+
+  运行特定测试文件
+
+  # 运行用例管理接口测试
+  pytest tests/unit/test_api/test_cases_api.py -v
+
+  # 运行执行管理接口测试
+  pytest tests/unit/test_api/test_executions_api.py -v
+
+  # 运行报告管理接口测试
+  pytest tests/unit/test_api/test_reports_api.py -v
+
+  # 运行基础接口测试
+  pytest tests/unit/test_api/test_common_api.py -v
+
+  运行特定测试类或方法
+
+  # 运行特定测试类
+  pytest tests/unit/test_api/test_cases_api.py::TestGetCases -v
+
+  # 运行特定测试方法
+  pytest tests/unit/test_api/test_cases_api.py::TestGetCases::test_get_cases_empty -v
+
+  生成覆盖率报告
+
+  # 运行测试并生成 HTML 覆盖率报告
+  pytest tests/unit/test_api/ -v --cov=app.api --cov-report=html
+
+  # 查看覆盖率报告
+  # 报告位置: backend/htmlcov/index.html
+
+  其他常用选项
+
+  # 简短输出
+  pytest tests/unit/test_api/ -v --tb=short
+
+  # 只显示失败的测试详情
+  pytest tests/unit/test_api/ -v --tb=no
+
+  # 运行标记为 unit 的测试
+  pytest tests/unit/test_api/ -v -m unit
+
+  # 并行运行测试（需要 pytest-xdist）
+  pytest tests/unit/test_api/ -v -n auto
+
+  快速验证
+
+  # 快速运行（不显示详细输出）
+  pytest tests/unit/test_api/ -q
+
+  # 统计测试数量
+  pytest tests/unit/test_api/ --collect-only
+
+
+  claude --dangerously-skip-permissions
+全自动
+
+/compact
+压缩记忆
+
+claude -r
+打开会话列表
+
+/rename <name>
+给当前会话命名
+
+claude -r --dangerously-skip-permissions
+
+用自然语言调用ai助手，也就是把playwright执行引擎换为claude code+playwrightMCP执行引擎

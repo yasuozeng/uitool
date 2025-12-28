@@ -1,0 +1,17 @@
+{
+  "name": "点击元素测试",
+  "priority": "P1",
+  "description": "测试click操作类型",
+  "tags": "regression",
+  "steps": [
+    {
+      "step_order": 1,
+      "action_type": "click",
+      "element_locator": "#submit-button",
+      "locator_type": "css",
+      "action_params": null,
+      "expected_result": "按钮被点击",
+      "description": "点击提交按钮"
+    }
+  ]
+}

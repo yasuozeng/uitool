@@ -1,0 +1,7 @@
+{
+  "name": "测试用例001",
+  "priority": "P1",
+  "description": "测试用例描述",
+  "tags": "smoke",
+  "steps": []
+}

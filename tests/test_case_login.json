@@ -1,0 +1,61 @@
+{
+  "name": "登录流程测试",
+  "priority": "P0",
+  "description": "测试完整的登录流程",
+  "tags": "smoke,auth",
+  "steps": [
+    {
+      "step_order": 1,
+      "action_type": "navigate",
+      "element_locator": null,
+      "locator_type": "css",
+      "action_params": {
+        "url": "https://example.com/login"
+      },
+      "expected_result": "打开登录页",
+      "description": "打开登录页面"
+    },
+    {
+      "step_order": 2,
+      "action_type": "input",
+      "element_locator": "#username",
+      "locator_type": "css",
+      "action_params": {
+        "text": "testuser"
+      },
+      "expected_result": "用户名输入成功",
+      "description": "输入用户名"
+    },
+    {
+      "step_order": 3,
+      "action_type": "input",
+      "element_locator": "#password",
+      "locator_type": "css",
+      "action_params": {
+        "text": "testpass"
+      },
+      "expected_result": "密码输入成功",
+      "description": "输入密码"
+    },
+    {
+      "step_order": 4,
+      "action_type": "click",
+      "element_locator": "button[type='submit']",
+      "locator_type": "css",
+      "action_params": null,
+      "expected_result": "提交登录",
+      "description": "点击登录按钮"
+    },
+    {
+      "step_order": 5,
+      "action_type": "verify_text",
+      "element_locator": null,
+      "locator_type": "css",
+      "action_params": {
+        "text": "欢迎"
+      },
+      "expected_result": "登录成功",
+      "description": "验证登录成功"
+    }
+  ]
+}

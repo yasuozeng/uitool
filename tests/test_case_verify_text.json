@@ -1,0 +1,19 @@
+{
+  "name": "验证文本测试",
+  "priority": "P1",
+  "description": "测试verify_text操作类型",
+  "tags": "regression",
+  "steps": [
+    {
+      "step_order": 1,
+      "action_type": "verify_text",
+      "element_locator": null,
+      "locator_type": "css",
+      "action_params": {
+        "text": "欢迎来到uiTool1.0"
+      },
+      "expected_result": "页面显示欢迎文本",
+      "description": "验证欢迎文本存在"
+    }
+  ]
+}
