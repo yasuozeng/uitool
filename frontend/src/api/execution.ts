@@ -11,7 +11,7 @@ import type { Execution, ExecutionDetail } from '@/store/modules/execution'
 export interface CreateExecutionRequest {
   execution_type: 'single' | 'batch'  // 执行类型：single 单个用例或 batch 批量用例
   case_ids: number[]
-  browser?: 'chrome' | 'firefox' | 'edge'
+  browser_type?: 'chrome' | 'firefox' | 'edge'  // 浏览器类型：chrome/firefox/edge
   headless?: boolean
   window_size?: string
 }

@@ -243,8 +243,59 @@ class ExecutionService:
         # 提交更改到数据库
         await db.commit()
 
+        # 添加调试日志：使用 print 确保能看到
+        print(f"[DEBUG] start_execution: execution_id={execution.id}, cases_count={len(cases)}")
+        # 添加调试日志：写入文件测试文件写入是否工作
+        from pathlib import Path
+        log_file = Path(__file__).parent.parent / "debug.log"
+        try:
+            with open(log_file, "a", encoding="utf-8") as f:
+                f.write(f"[DEBUG] start_execution: 准备创建后台任务, execution_id={execution.id}, cases_count={len(cases)}\n")
+                f.flush()
+        except Exception as e:
+            print(f"[ERROR] 无法写入日志文件: {e}")
+
         # 使用 asyncio.create_task 异步执行测试
-        asyncio.create_task(self._run_execution(execution.id, cases, engine))
+        # 添加任务包装器，用于捕获后台任务中的异常
+        async def task_wrapper():
+            # 记录任务开始
+            import sys
+            from pathlib import Path
+            # 使用绝对路径写入日志文件
+            log_file = Path(__file__).parent.parent / "debug.log"
+            with open(log_file, "a", encoding="utf-8") as f:
+                f.write(f"[DEBUG] task_wrapper 开始: execution_id={execution.id}\n")
+                f.flush()  # 立即刷新缓冲区
+
+            try:
+                await self._run_execution(execution.id, cases, engine)
+            except Exception as e:
+                # 捕获任务级别的异常
+                import traceback
+                from pathlib import Path
+                # 将错误信息写入文件，确保能被看到
+                log_file = Path(__file__).parent.parent / "debug.log"
+                with open(log_file, "a", encoding="utf-8") as f:
+                    f.write(f"[ERROR] 后台任务异常: execution_id={execution.id}\n")
+                    f.write(f"Error: {str(e)}\n")
+                    f.write(f"Traceback:\n{traceback.format_exc()}\n")
+                    f.flush()  # 立即刷新缓冲区
+
+        # 创建并启动后台任务
+        # 添加日志：准备创建任务
+        print(f"[DEBUG] start_execution: 准备创建后台任务, execution_id={execution.id}, cases_count={len(cases)}")
+
+        task = asyncio.create_task(task_wrapper())
+        # 保存任务引用，防止被垃圾回收
+        # 在 async 中，asyncio.create_task() 创建的任务需要保持引用，否则可能被垃圾回收
+        self._running_executions[execution_id] = engine  # 引擎已经在上面保存了，这里只需确保任务运行
+        # 任务引用保存到服务实例中，防止被垃圾回收
+        if not hasattr(self, '_tasks'):
+            self._tasks = {}  # 任务字典：{execution_id: task}
+        self._tasks[execution_id] = task
+
+        # 添加日志：任务已创建
+        print(f"[DEBUG] start_execution: 后台任务已创建, task_id={id(task)}, execution_id={execution.id}")
 
         # 返回执行记录
         return execution
@@ -266,6 +317,17 @@ class ExecutionService:
             cases: 用例列表
             engine: Playwright 引擎
         """
+        # 添加调试日志：记录方法入口，写入文件确保能看到
+        import sys
+        from pathlib import Path
+        # 使用绝对路径写入日志文件
+        log_file = Path(__file__).parent.parent / "debug.log"
+        with open(log_file, "a", encoding="utf-8") as f:
+            f.write(f"[DEBUG] _run_execution 被调用: execution_id={execution_id}, cases_count={len(cases)}\n")
+            f.flush()  # 立即刷新缓冲区
+        sys.stderr.write(f"[DEBUG] _run_execution 被调用: execution_id={execution_id}, cases_count={len(cases)}\n")
+        sys.stderr.flush()
+
         # 创建新的数据库会话，避免使用请求会话（可能已关闭）
         from app.models.database import AsyncSessionLocal
         async with AsyncSessionLocal() as db:
@@ -357,7 +419,19 @@ class ExecutionService:
             except Exception as e:
                 # 捕获执行过程中的异常
                 import traceback
+                import sys
+                from pathlib import Path
+                # 打印完整的异常堆栈信息到 stderr，确保能看到错误
                 traceback.print_exc()
+                sys.stderr.write(f"[ERROR] 执行失败: execution_id={execution_id}, error={str(e)}\n")
+                sys.stderr.flush()
+                # 同时写入日志文件
+                log_file = Path(__file__).parent.parent / "debug.log"
+                with open(log_file, "a", encoding="utf-8") as f:
+                    f.write(f"[ERROR] 执行失败: execution_id={execution_id}, error={str(e)}\n")
+                    f.write(f"Traceback:\n{traceback.format_exc()}\n")
+                    f.flush()
+                # 重新获取执行记录并更新状态
                 result = await db.execute(select(Execution).where(Execution.id == execution_id))
                 execution = result.scalar_one_or_none()
                 if execution:
@@ -374,8 +448,9 @@ class ExecutionService:
                     # 关闭浏览器失败时忽略
                     pass
 
-                # 清除引擎引用
+                # 清除引擎引用和任务引用
                 self._running_executions.pop(execution_id, None)
+                self._tasks.pop(execution_id, None)
 
     # 定义停止执行任务的异步方法
     async def stop_execution(self, db: AsyncSession, execution_id: int) -> bool:

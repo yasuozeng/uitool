@@ -10,10 +10,15 @@ from sqlalchemy.orm import DeclarativeBase
 from app.config import DATABASE_URL
 
 # 创建异步数据库引擎，用于连接 SQLite 数据库
+# SQLite 需要特殊的连接参数来支持异步操作和并发访问
 engine = create_async_engine(
     DATABASE_URL,  # 数据库连接字符串，从配置文件读取
     echo=False,  # 是否打印 SQL 语句，False 不打印（开发时可设为 True 调试）
     future=True,  # 使用 SQLAlchemy 2.0 风格的 API
+    # SQLite 特定配置：启用 WAL 模式以支持更好的并发访问
+    connect_args={
+        "check_same_thread": False,  # 允许多线程访问（虽然是异步，但 aiosqlite 内部使用线程）
+    },
 )
 
 # 创建异步会话工厂，用于生成数据库会话

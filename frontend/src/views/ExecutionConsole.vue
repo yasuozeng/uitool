@@ -10,7 +10,68 @@
     </div>
 
     <div class="console-content">
-      <!-- 左侧：配置面板 -->
+      <!-- 左侧：执行结果 -->
+      <div class="result-panel">
+        <!-- 执行进度 -->
+        <div v-if="currentExecution" class="progress-section">
+          <div class="progress-info">
+            <div class="progress-stats">
+              <el-statistic title="进度" :value="progress">
+                <template #suffix>%</template>
+              </el-statistic>
+              <el-statistic title="通过" :value="currentExecution.passed_cases">
+                <template #suffix>/ {{ currentExecution.total_cases }}</template>
+              </el-statistic>
+              <el-statistic title="失败" :value="currentExecution.failed_cases" />
+              <el-statistic title="通过率" :value="passRate">
+                <template #suffix>%</template>
+              </el-statistic>
+            </div>
+          </div>
+          <el-progress
+            :percentage="progress"
+            :status="progressStatus"
+            :stroke-width="12"
+          />
+        </div>
+
+        <!-- 执行结果列表 -->
+        <div class="results-section">
+          <h3>执行结果</h3>
+          <div class="results-list">
+            <div
+              v-for="detail in executionDetails"
+              :key="detail.id"
+              class="result-item"
+              :class="`result-${detail.status}`"
+            >
+              <div class="result-header">
+                <el-icon v-if="detail.status === 'success' || detail.status === 'completed'" class="success-icon"><CircleCheck /></el-icon>
+                <el-icon v-else class="error-icon"><CircleClose /></el-icon>
+                <span class="case-name">{{ detail.case_name }}</span>
+                <el-tag :type="detail.status === 'success' || detail.status === 'completed' ? 'success' : 'danger'" size="small">
+                  {{ detail.status === 'success' || detail.status === 'completed' ? '通过' : '失败' }}
+                </el-tag>
+              </div>
+              <div v-if="detail.error_message" class="error-message">
+                {{ detail.error_message }}
+              </div>
+              <div v-if="detail.screenshot_path" class="screenshot-action">
+                <el-button type="primary" size="small" @click="handleViewScreenshot(detail.screenshot_path!)">
+                  <el-icon><Picture /></el-icon>
+                  查看截图
+                </el-button>
+              </div>
+            </div>
+
+            <div v-if="executionDetails.length === 0 && !isExecuting" class="empty-results">
+              <el-empty description="暂无执行结果" />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 右侧：配置面板 -->
       <div class="config-panel">
         <!-- 引擎配置面板 -->
         <div class="panel-section">
@@ -125,67 +186,6 @@
             <el-icon><VideoPause /></el-icon>
             停止执行
           </el-button>
-        </div>
-      </div>
-
-      <!-- 右侧：执行结果 -->
-      <div class="result-panel">
-        <!-- 执行进度 -->
-        <div v-if="currentExecution" class="progress-section">
-          <div class="progress-info">
-            <div class="progress-stats">
-              <el-statistic title="进度" :value="progress">
-                <template #suffix>%</template>
-              </el-statistic>
-              <el-statistic title="通过" :value="currentExecution.passed_cases">
-                <template #suffix>/ {{ currentExecution.total_cases }}</template>
-              </el-statistic>
-              <el-statistic title="失败" :value="currentExecution.failed_cases" />
-              <el-statistic title="通过率" :value="passRate">
-                <template #suffix>%</template>
-              </el-statistic>
-            </div>
-          </div>
-          <el-progress
-            :percentage="progress"
-            :status="progressStatus"
-            :stroke-width="12"
-          />
-        </div>
-
-        <!-- 执行结果列表 -->
-        <div class="results-section">
-          <h3>执行结果</h3>
-          <div class="results-list">
-            <div
-              v-for="detail in executionDetails"
-              :key="detail.id"
-              class="result-item"
-              :class="`result-${detail.status}`"
-            >
-              <div class="result-header">
-                <el-icon v-if="detail.status === 'success' || detail.status === 'completed'" class="success-icon"><CircleCheck /></el-icon>
-                <el-icon v-else class="error-icon"><CircleClose /></el-icon>
-                <span class="case-name">{{ detail.case_name }}</span>
-                <el-tag :type="detail.status === 'success' || detail.status === 'completed' ? 'success' : 'danger'" size="small">
-                  {{ detail.status === 'success' || detail.status === 'completed' ? '通过' : '失败' }}
-                </el-tag>
-              </div>
-              <div v-if="detail.error_message" class="error-message">
-                {{ detail.error_message }}
-              </div>
-              <div v-if="detail.screenshot_path" class="screenshot-action">
-                <el-button type="primary" size="small" @click="handleViewScreenshot(detail.screenshot_path!)">
-                  <el-icon><Picture /></el-icon>
-                  查看截图
-                </el-button>
-              </div>
-            </div>
-
-            <div v-if="executionDetails.length === 0 && !isExecuting" class="empty-results">
-              <el-empty description="暂无执行结果" />
-            </div>
-          </div>
         </div>
       </div>
     </div>
@@ -316,7 +316,7 @@ const handleStartExecution = async () => {
     const createResponse = await createExecution({
       execution_type: executionType,
       case_ids: selectedCaseIds.value,
-      browser: config.value.browser as any,
+      browser_type: config.value.browser as 'chrome' | 'firefox' | 'edge',  // 浏览器类型字段
       headless: config.value.headless,
       window_size: config.value.window_size
     })
@@ -451,7 +451,8 @@ onUnmounted(() => {
     height: calc(100vh - 136px); // 调整高度计算
 
     .config-panel {
-      width: 360px; // 从 350px 增加到 360px
+      flex: 1; // 改为自适应，占满剩余空间
+      min-width: 0; // 添加以防止内容溢出
       display: flex;
       flex-direction: column;
       gap: 20px; // 从 16px 增加到 20px
@@ -582,11 +583,11 @@ onUnmounted(() => {
     }
 
     .result-panel {
-      flex: 1;
+      width: 360px; // 改为固定宽度
+      flex: none; // 移除自适应
       display: flex;
       flex-direction: column;
       gap: 20px; // 从 16px 增加到 20px
-      min-width: 0;
 
       .progress-section {
         background: white;
